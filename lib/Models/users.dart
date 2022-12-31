@@ -10,19 +10,23 @@ class UserProfile extends Equatable {
   String userId;
   String name;
   List<String> contactNumber;
+  List<String> locationTimestamp;
 
   UserProfile({
     required this.userId,
     required this.name,
     required this.contactNumber,
     required this.email,
+    required this.locationTimestamp,
   });
 
   UserProfile.fromJson(Map<String, dynamic> json):
         userId=json['userid'],
         name = json['name'],
         email = json['email'],
-        contactNumber=json['contactNumber'];
+        contactNumber=json['contactNumber'],
+        locationTimestamp=json['locationTimestamp']
+  ;
 
   factory UserProfile.fromFirestore(Map<String, dynamic> data) {
     return UserProfile(
@@ -30,6 +34,7 @@ class UserProfile extends Equatable {
       userId: data['userId'],
       contactNumber: List<String>.from(data['contactNumber']),
       email: data['email'],
+      locationTimestamp: List<String>.from(data['locationTimestamp']),
     );
   }
 
@@ -38,6 +43,7 @@ class UserProfile extends Equatable {
     'name': name,
     'email': email,
     'contactNumber':contactNumber,
+    'locationTimestamp':locationTimestamp,
   };
 
   @override

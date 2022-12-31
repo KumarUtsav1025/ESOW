@@ -34,7 +34,7 @@ class _ProfileState extends State<Profile> {
   LocationTrack locationTrack = LocationTrack();
   final GlobalState _globalState = GlobalState();
   final _formKey = GlobalKey<FormState>();
-  Map<String, List<String>>? locationData;
+  List<String>? locationData;
   final TextEditingController contactController = TextEditingController();
   final TextEditingController contact2Controller = TextEditingController();
   final TextEditingController contact3Controller = TextEditingController();
@@ -168,10 +168,12 @@ class _ProfileState extends State<Profile> {
                 primaryIcon: Icons.location_on_outlined,
                 secondaryIcon: Icons.pending_rounded,
                 onClick: () async{
-                  requestPermission(Permission.locationAlways);
+                  await requestPermission(Permission.locationAlways);
                   setState(() {
                     _listenForPermissionStatus();
                   });
+                  String data = await LocationTrack().getLocation();
+                  locationData=[data];
                 },
               ),
               ProfileButton(
@@ -207,6 +209,10 @@ class _ProfileState extends State<Profile> {
     print(user!.email.toString());
     print(_textController.text);
     print(locationData);
+    if(locationData==null){
+      String data = await LocationTrack().getLocation();
+      locationData=[data];
+    }
     if (_formKey.currentState!.validate()) {
       cubit.profileUpload(UserProfile(userId: user!.uid.toString(),
           name: _textController.text,
@@ -216,7 +222,8 @@ class _ProfileState extends State<Profile> {
             contact4Controller.text,
             contact5Controller.text,
           ],
-          email: user!.email.toString())
+          email: user!.email.toString(),
+          locationTimestamp: locationData!)
       );
     }
     else {

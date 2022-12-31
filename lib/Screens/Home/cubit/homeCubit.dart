@@ -14,11 +14,12 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._homeNetwork) : super(const HomeLoading());
 
   Future<void> sendSMS(
-      String msg, List<String> listReceipents) async {
+      String msg, List<String> listReceipents, List<String> data) async {
     try {
       emit(HomeLoading());
       String? message = await _homeNetwork.sendingSMS(msg: msg, listReceipents: listReceipents);
-      emit(SMSSuccess(message!));
+      await _homeNetwork.updateData(data: data);
+      emit(SMSSuccess(message));
     } on CustomException catch(e) {
       print(3);
       emit(HomeError(e.description));
@@ -30,9 +31,9 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> getUser() async {
     try {
-      emit(ProfileLoading());
-      UserProfile? userProfile = await _homeNetwork.getUserDetails();
-      emit(HomeSuccess(userProfile!));
+      emit(HomeLoading());
+      UserProfile userProfile = await _homeNetwork.getUserDetails() as UserProfile;
+      emit(HomeSuccess(userProfile));
     } on CustomException catch(e) {
       print(1);
       emit(HomeError(e.description));

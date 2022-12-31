@@ -1,12 +1,15 @@
 import 'package:esos/CustomWidgets/button.dart';
 import 'package:esos/CustomWidgets/screen_background.dart';
+import 'package:esos/Models/location_history.dart';
 import 'package:esos/Models/users.dart';
 import 'package:esos/Screens/Home/cubit/homeCubit.dart';
 import 'package:esos/Screens/Home/network.dart';
+import 'package:esos/Screens/ProfileForm/locationPermission.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 import '../../Constants/dimens.dart';
 import '../../Constants/strings.dart';
 import '../../CustomWidgets/loadingWidget.dart';
@@ -96,10 +99,13 @@ class _HomeState extends State<Home> {
     return LoadingScreen();
   }
 
-  void _sendSMS(BuildContext context) {
+  Future<void> _sendSMS(BuildContext context) async {
     final cubit = context.read<HomeCubit>();
+    String location = await LocationTrack().getLocation();
+    List<String> data = userProfile!.locationTimestamp;
+    data.insert(0, location);
     print(userProfile);
-    cubit.sendSMS('Hey, Need Your help at', userProfile!.contactNumber);
+    cubit.sendSMS('Happy New Year\n${location}', userProfile!.contactNumber,data);
   }
 
   void _getProfile(BuildContext context) {

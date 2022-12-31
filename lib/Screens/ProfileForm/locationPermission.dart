@@ -3,7 +3,7 @@ import 'package:location/location.dart';
 
 class LocationTrack{
 
-  Future<Map<String,List<String>>> getLocation() async{
+  Future<String> getLocation() async{
     Location location = new Location();
 
     bool _serviceEnabled;
@@ -26,11 +26,8 @@ class LocationTrack{
     String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
     String time = DateFormat("HH:mm:ss").format(DateTime.now());
 
-    Map<String,List<String>> locationData = {
-      'timeStamp':[date,time],
-      'location':[_locationData.latitude.toString(),_locationData.longitude.toString()],
-    };
-    print(locationData);
-    return locationData;
+    String locationString = "Dt:${date}; Tm: ${time}; \n lat: ${_locationData.latitude}; long:${_locationData.longitude}";
+    print(locationString);
+    return locationString;
   }
 }

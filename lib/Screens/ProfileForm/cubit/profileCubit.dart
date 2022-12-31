@@ -13,10 +13,10 @@ part 'profileState.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final FirebaseProfile _firebaseProfile;
   ProfileCubit(this._firebaseProfile) : super(ProfileInitial());
-  Future<void> profileUpload(UserProfile userProfile) async {
+  Future<void> profileUpload(UserProfile userProfile,) async {
     try {
       emit(ProfileLoading());
-      _firebaseProfile.profileUpload(userProfile: userProfile);
+      await _firebaseProfile.profileUpload(userProfile: userProfile);
       emit(ProfileSuccess(userProfile));
     } on CustomException catch(e) {
       emit(ProfileError(e.description));
