@@ -2,15 +2,13 @@
 
 A new Flutter project.
 
-## Getting Started
+## Introduction
 
-This project is a starting point for a Flutter application.
+Flutter application aimed at promoting women safety.
 
-A few resources to get you started if this is your first Flutter project:
+In case of emergency, a button needs to be pressed 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Sends an emergency message to 5 contacts. 
+- Emergency message contains the location.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+App works on the BLOC pattern for state management and Firebase is used as a reliable backend.
